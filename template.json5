@@ -1,2 +1,14 @@
 // https://mgz0227.github.io/The-tutorial-of-Legado/Rule/source.html
-{}
+[
+  {
+    "bookSourceUrl": "https://hlib.cc",
+    "bookSourceName": "hlib.cc",
+    "bookSourceGroup": "🔞 H图书馆",
+    "loginUrl": "https://hlib.cc/login",
+    "bookUrlPattern": "^https:\\/\\/hlib\\.cc\\/n\\/(\\d+)",
+    "header": {
+      "referer": "https://hlib.cc",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+    }
+  }
+]
