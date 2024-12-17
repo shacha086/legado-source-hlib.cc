@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 import fs from 'fs-extra';
 import JSON5 from 'json5';
+import UglifyJS from 'uglify-js';
 
 const RegExtraFile = /#FROM_FILE#/;
 
@@ -44,7 +45,9 @@ for (const ruleName of ruleNames) {
     if (RegExtraFile.test(ruleMeta[name])) {
       const extraFilePath = join(rulePath, `${name}.js`);
       const extraFile = fs.readFileSync(extraFilePath, { encoding: 'utf-8' });
-      ruleMeta[name] = `@js:${ruleMeta[name].replace(RegExtraFile, extraFile)}`;
+      const extraFileCode = ruleMeta[name].replace(RegExtraFile, extraFile);
+
+      ruleMeta[name] = `@js:${UglifyJS.minify(extraFileCode).code}`;
     }
   }
   basicMeta[`rule${ruleName}`] = ruleMeta;

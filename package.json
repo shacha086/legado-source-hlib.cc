@@ -10,7 +10,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/uglify-js": "^3.17.5",
     "fs-extra": "^11.2.0",
-    "json5": "^2.2.3"
+    "json5": "^2.2.3",
+    "uglify-js": "^3.19.3"
   }
 }
