@@ -1,0 +1,9 @@
+{
+  "bookList": "#FROM_FILE#",
+  "name": "title",
+  "author": "aName",
+  "kind": "tags",
+  "wordCount": "char",
+  "intro": "description",
+  "bookUrl": "url",
+}
