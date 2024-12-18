@@ -20,6 +20,7 @@ fs.emptyDirSync(__distdir);
 
 // Read basic meta
 const basicMeta = JSON5.parse(fs.readFileSync(resolve(__sourcedir, './meta.json5'), { encoding: 'utf-8' }));
+basicMeta['bookSourceComment'] = fs.readFileSync(resolve(__rootdir, './README.md'), { encoding: 'utf-8' });
 basicMeta['lastUpdateTime'] = Date.now();
 
 // Read rule paths
