@@ -46,8 +46,9 @@ for (const ruleName of ruleNames) {
       const extraFilePath = join(rulePath, `${name}.js`);
       const extraFile = fs.readFileSync(extraFilePath, { encoding: 'utf-8' });
       const extraFileCode = ruleMeta[name].replace(RegExtraFile, extraFile);
+      const extraFileMinify = UglifyJS.minify(extraFileCode).code;
 
-      ruleMeta[name] = `@js:${UglifyJS.minify(extraFileCode).code}`;
+      ruleMeta[name] = ruleMeta[name].replace(RegExtraFile, extraFileMinify);
     }
   }
   basicMeta[`rule${ruleName}`] = ruleMeta;

@@ -1,5 +1,5 @@
 {
   "content": "@css:#content > p@text",
   "title": "@css:h3.text-center.m-3@text",
-  "nextContentUrl": "#FROM_FILE#",
+  "nextContentUrl": "@js:#FROM_FILE#",
 }

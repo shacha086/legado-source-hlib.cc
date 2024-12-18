@@ -1,5 +1,5 @@
 {
-  "bookList": "#FROM_FILE#",
+  "bookList": "@js:#FROM_FILE#",
   "name": "title",
   "author": "aName",
   "kind": "tags",
