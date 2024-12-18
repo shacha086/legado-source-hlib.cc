@@ -4,9 +4,11 @@
   "bookSourceUrl": "https://hlib.cc",
   "bookSourceName": "H图书馆",
   "bookSourceGroup": "🔞 H图书馆",
+  "bookSourceType": 0,
 
   // Features
   "enabledCookieJar": true,
+  "respondTime": 180000,
 
   // Basic rules
   "loginUrl": "https://hlib.cc/login",
