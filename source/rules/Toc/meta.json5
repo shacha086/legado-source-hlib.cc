@@ -1,6 +1,6 @@
 {
   "chapterList": "@css:div.row.flex-lg-row-reverse div.col-lg-9 ul > *",
   "chapterName": "@css:li div:nth-child(2)@text",
-  "chapterUrl": "@css:li div:nth-child(2) a@href",
+  "chapterUrl": "@css:li div:nth-child(2) a@href##$##?p=1,{\"webView\":true}",
   "updateTime": "@css:li div:nth-child(5)@text",
 }

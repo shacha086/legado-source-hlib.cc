@@ -5,5 +5,5 @@
   "kind": "tags",
   "wordCount": "char",
   "intro": "description",
-  "bookUrl": "url",
+  "bookUrl": "url##$##?p=1,{\"webView\":true}",
 }

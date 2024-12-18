@@ -16,4 +16,5 @@ params.token = java.md5Encode(`${params.id}search${searchPath}`);
   headers: {
     'content-type': 'application/json',
   },
+  webView: true,
 })}`;
