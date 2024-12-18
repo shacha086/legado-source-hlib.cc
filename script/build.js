@@ -55,4 +55,4 @@ for (const ruleName of ruleNames) {
   basicMeta[`rule${ruleName}`] = ruleMeta;
 }
 
-fs.writeFileSync(resolve(__distdir, './rule.json'), JSON.stringify(basicMeta));
+fs.writeFileSync(resolve(__distdir, './rule.json'), JSON.stringify([basicMeta]));
