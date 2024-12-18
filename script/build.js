@@ -23,6 +23,13 @@ const basicMeta = JSON5.parse(fs.readFileSync(resolve(__sourcedir, './meta.json5
 basicMeta['bookSourceComment'] = fs.readFileSync(resolve(__rootdir, './README.md'), { encoding: 'utf-8' });
 basicMeta['lastUpdateTime'] = Date.now();
 
+// Add search scripts
+const searchScript = fs.readFileSync(resolve(__sourcedir, './searchUrl.js'), { encoding: 'utf-8' });
+const searchScriptMinify = UglifyJS.minify(searchScript);
+basicMeta['searchUrl'] = `@js:${searchScript}`;
+// if (!searchScriptMinify.error) basicMeta['searchUrl'] = `@js:${searchScriptMinify.code}`;
+// else basicMeta['searchUrl'] = `@js:${searchScript}`;
+
 // Read rule paths
 const ruleNames = (() => {
   const rulesPath = resolve(__sourcedir, './rules');
@@ -47,10 +54,11 @@ for (const ruleName of ruleNames) {
     if (RegExtraFile.test(ruleMeta[name])) {
       const extraFilePath = join(rulePath, `${name}.js`);
       const extraFile = fs.readFileSync(extraFilePath, { encoding: 'utf-8' });
-      const extraFileCode = ruleMeta[name].replace(RegExtraFile, extraFile);
-      const extraFileMinify = UglifyJS.minify(extraFileCode).code;
+      const extraFileMinify = UglifyJS.minify(extraFile);
 
-      ruleMeta[name] = ruleMeta[name].replace(RegExtraFile, extraFileMinify);
+      ruleMeta[name] = ruleMeta[name].replace(RegExtraFile, extraFile);
+      // if (!extraFileMinify.error) ruleMeta[name] = ruleMeta[name].replace(RegExtraFile, extraFileMinify.code);
+      // else ruleMeta[name] = ruleMeta[name].replace(RegExtraFile, extraFile);
     }
   }
   basicMeta[`rule${ruleName}`] = ruleMeta;
