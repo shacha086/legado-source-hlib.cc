@@ -49,8 +49,7 @@ function getFakeSeries(java, novelId) {
   }];
 }
 
-function getSeries(type, id) {
-  const { java } = this;
+function getSeries(java, type, id) {
   if (type == 'novel') return getFakeSeries(java, id);
 
   const result = [];
@@ -65,4 +64,29 @@ function getSeries(type, id) {
   };
 
   return result;
+}
+
+/**
+ * Output:
+ * {
+ *   "name": string,
+ *   "author": string,
+ *   "tags": string
+ *   "lastChapter": string,
+ *   "description": string,
+ * }
+ */
+function getSeriesInfo(java, seriesID) {
+  const seriesPath = `/s/${seriesID}?p=1}`;
+  const seriesHTML = java.ajax(`https://hlib.cc${seriesPath},{"webView":true}`);
+  const seriesDom = org.jsoup.Jsoup.parse(seriesHTML).body();
+  const seriesChapters = getSeries(java, 'series', seriesID);
+
+  return {
+    name: seriesDom.select('div.container h3').text(),
+    author: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(1) li.list-group-item.text-center a').text(),
+    tags: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(4) li:nth-child(2)').text().replaceAll('，', ','),
+    lastChapter: seriesChapters[seriesChapters.length - 1].title,
+    description: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(2) li:nth-child(2)').text(),
+  }
 }

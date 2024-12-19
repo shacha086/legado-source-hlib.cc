@@ -1,7 +1,8 @@
 {
-  "name": "@js:#FROM_FILE#",
-  "author": "@css:div.row.flex-lg-row-reverse div.col-lg-3.mt-3 ul:nth-child(1) li.list-group-item.text-center a@text",
-  "kind": "@css:div.row.flex-lg-row-reverse div.col-lg-3.mt-3 ul:nth-child(3) li:nth-child(2)@text##，##,",
-  "lastChapter": "@css:#s-pages ul li:last-child@text",
-  "intro": "@css:#description@text",
+  "init": "@js:#FROM_FILE#",
+  "name": "name",
+  "author": "author",
+  "kind": "tags",
+  "lastChapter": "lastChapter",
+  "intro": "description",
 }
