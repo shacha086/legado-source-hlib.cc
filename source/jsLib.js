@@ -13,7 +13,6 @@ function getSeriesInfoByPage(java, seriesID, page) {
   const seriesPath = `/s/${seriesID}?p=${parseInt(page || 1)}`;
   const seriesHTML = java.ajax(`https://hlib.cc${seriesPath},{"webView":true}`);
   const seriesDom = org.jsoup.Jsoup.parse(seriesHTML).body();
-  const seriesName = seriesDom.select('div.container > h3').text();
   const novels = [];
 
   // Parse novels info
@@ -21,12 +20,11 @@ function getSeriesInfoByPage(java, seriesID, page) {
   if (!novelsDom || novelsDom.length <= 0) return novels;
 
   novelsDom.forEach((novelDom) => {
-    const titleCurrent = novelDom.select('div:nth-child(2) > a').text();
     const charCurrent = parseInt(novelDom.select('div:nth-child(3) > span:nth-child(2)').text().replaceAll(',', '').replace('字', ''));
     novels.push({
-      title: titleCurrent,
+      title: novelDom.select('div:nth-child(2) > a').text().match(/#(\d+)\s(.+)/)[2],
       description: novelDom.select('div:nth-child(5) span').text(),
-      isSeriesName: titleCurrent == seriesName,
+      isSeriesName: false,
       char: charCurrent,
       url: `${novelDom.select('div:nth-child(2) > a').attr('href')}?p=1,{"webView":true}`
     });
