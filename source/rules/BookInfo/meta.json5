@@ -4,5 +4,4 @@
   "kind": "@css:div.row.flex-lg-row-reverse div.col-lg-3.mt-3 ul:nth-child(3) li:nth-child(2)@text##，##,",
   "lastChapter": "@css:#s-pages ul li:last-child@text",
   "intro": "@css:#description@text",
-  "tocUrl": "@js:#FROM_FILE#"
 }
