@@ -1,46 +1,68 @@
 /**
  * Output:
  * {
- *   "sName": string,
- *   "sTags": string,
- *   "sDescription": string,
- *   "author": string,
- *   "charTotal": number,
- *   "novels": {
- *     "title": string,
- *     "char": number,
- *     "url": string,
- *   }[],
- *   "nextPageUrl": string,
- * }
+ *   "title": string,
+ *   "description": string,
+ *   "isSeriesName": boolean,
+ *   "char": number,
+ *   "url": string,
+ * }[]
  */
-function getSeriesInfoByPage(seriesID, page) {
-  const { java } = this;
-  if (!seriesID || seriesID == '') return null;
-  const seriesPath = `/s/${seriesID}?p=${page || 1}`;
-  const seriesHTML = java.ajax(`https://hlib.cc${seriesPath}`);
+function getSeriesInfoByPage(java, seriesID, page) {
+  if (!seriesID || seriesID == '') return [];
+  const seriesPath = `/s/${seriesID}?p=${parseInt(page || 1)}`;
+  const seriesHTML = java.ajax(`https://hlib.cc${seriesPath},{"webView":true}`);
   const seriesDom = org.jsoup.Jsoup.parse(seriesHTML).body();
-  const result = {
-    sName: seriesDom.select('div.container > h3').text(),
-    sTags: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(4) li:nth-child(2)').text().replaceAll('，', ','),
-    sDescription: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(2) li:nth-child(2)').text() || '',
-    author: seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-3 ul:nth-child(1) li.list-group-item.text-center a').text(),
-    charTotal: 0,
-    novels: [],
-    nextPageUrl: `/s/${seriesID}?p=${(page || 1) + 1}`,
-  };
+  const seriesName = seriesDom.select('div.container > h3').text();
+  const novels = [];
 
   // Parse novels info
   const novelsDom = seriesDom.select('div.container div.row.flex-lg-row-reverse div.col-lg-9 ul > *');
+  if (!novelsDom || novelsDom.length <= 0) return novels;
+
   novelsDom.forEach((novelDom) => {
+    const titleCurrent = novelDom.select('div:nth-child(2) > a').text();
     const charCurrent = parseInt(novelDom.select('div:nth-child(3) > span:nth-child(2)').text().replaceAll(',', '').replace('字', ''));
-    result.novels.push({
-      title: novelDom.select('div:nth-child(2) > a').text(),
+    novels.push({
+      title: titleCurrent,
+      description: novelDom.select('div:nth-child(5) span').text(),
+      isSeriesName: titleCurrent == seriesName,
       char: charCurrent,
-      url: `${novelDom.select('div:nth-child(2) > a').attr('href')}?p=1`
+      url: `${novelDom.select('div:nth-child(2) > a').attr('href')}?p=1,{"webView":true}`
     });
-    result.charTotal += charCurrent;
   });
+  return novels;
+}
+
+function getFakeSeries(java, novelId) {
+  if (!novelId || novelId == '') return [];
+  const novelPath = `/s/${novelId}?p=1`;
+  const novelHTML = java.ajax(`https://hlib.cc${novelPath},{"webView":true}`);
+  const novelDom = org.jsoup.Jsoup.parse(novelHTML).body();
+  const result = {
+    title: novelDom.setect('div.container h3').text(),
+    description: novelDom.select('#description').text(),
+    isSeriesName: true,
+    char: null,
+    url: `/s/${novelId}?p=1,{"webView":true}`
+  };
+  return [result];
+}
+
+function getSeries(type, id) {
+  const { java } = this;
+  if (type == 'novel') return getFakeSeries(java, id);
+
+  const result = [];
+  let currentPage = 1;
+  let isFinished = false;
+  while (!isFinished) { // TODO: Infinite loop bug
+    const seriesResult = getSeriesInfoByPage(java, id, currentPage);
+    if (seriesResult.length < 30) isFinished = true;
+
+    seriesResult.forEach((novel) => result.push(novel));
+    currentPage++;
+  };
 
   return result;
 }
