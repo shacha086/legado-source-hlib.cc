@@ -36,7 +36,7 @@ function getSeriesInfoByPage(java, seriesID, page) {
 
 function getFakeSeries(java, novelId) {
   if (!novelId || novelId == '') return [];
-  const novelPath = `/s/${novelId}?p=1`;
+  const novelPath = `/n/${novelId}?p=1`;
   const novelHTML = java.ajax(`https://hlib.cc${novelPath},{"webView":true}`);
   const novelDom = org.jsoup.Jsoup.parse(novelHTML).body();
   const result = {
@@ -44,7 +44,7 @@ function getFakeSeries(java, novelId) {
     description: novelDom.select('#description').text(),
     isSeriesName: true,
     char: null,
-    url: `/s/${novelId}?p=1,{"webView":true}`
+    url: `/n/${novelId}?p=1,{"webView":true}`
   };
   return [result];
 }
