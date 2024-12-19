@@ -1,3 +1,20 @@
+/**
+ * Inputs:
+ * {
+ *   "id": string,
+ *   "title": string,
+ *   "tags": string[],
+ *   "description": string,
+ *   "author": string,
+ *   "aName": string,
+ *   "char": number,
+ *   "like": number,
+ *   "view": number,
+ *   "ifLike": boolean,
+ *   "series": string,
+ *   "sTitle": string,
+ * }[]
+ */
 ((html) => {
   const jsonRaw = org.jsoup.Jsoup.parse(html).body().text();
   const json = JSON.parse(jsonRaw);
