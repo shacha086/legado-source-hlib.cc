@@ -5,7 +5,7 @@
   json.novels.forEach((novel) => {
 
     novel.tags = novel.tags.join(',');
-    novel.url = `https://hlib.cc/n/${novel.id}?p=1,{"webView":true}`;
+    novel.url = `/n/${novel.id}?p=1,{"webView":true}`;
 
     result.push(novel);
   });

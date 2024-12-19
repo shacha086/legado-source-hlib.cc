@@ -11,5 +11,5 @@
   const nextPageFnParams = nextPageFn.match(/rp\('([a-zA-Z-_\d]+)',\s(\d+)\);/);
   if (!novelId || !nextPageFnParams) return '';
 
-  return `https://hlib.cc/n/${novelId}?${nextPageFnParams[1]}=${nextPageFnParams[2]},{"webView":true}`;
+  return `/n/${novelId}?${nextPageFnParams[1]}=${nextPageFnParams[2]},{"webView":true}`;
 })(result);

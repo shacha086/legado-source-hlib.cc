@@ -11,7 +11,7 @@
   params.id = String(searchHTML).match(/id:\s'([a-zA-Z-_\d]+)',/)[1];
   params.token = java.md5Encode(`${params.id}search${searchPath}`);
 
-  return `https://hlib.cc/api/search/,${JSON.stringify({
+  return `/api/search/,${JSON.stringify({
     method: 'POST',
     body: JSON.stringify(params),
     headers: {
