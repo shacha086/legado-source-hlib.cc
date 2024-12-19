@@ -29,11 +29,18 @@ const basicMeta = JSON5.parse(fs.readFileSync(resolve(__sourcedir, './meta.json5
 basicMeta['bookSourceComment'] = fs.readFileSync(resolve(__rootdir, './README.md'), { encoding: 'utf-8' });
 basicMeta['lastUpdateTime'] = Date.now();
 
-// Add search scripts
-const searchScript = fs.readFileSync(resolve(__sourcedir, './searchUrl.js'), { encoding: 'utf-8' });
-const searchScriptMinify = UglifyJS.minify(searchScript, UglifyJSOptions);
-if (!searchScriptMinify.error) basicMeta['searchUrl'] = `@js:${searchScriptMinify.code}`;
-else basicMeta['searchUrl'] = `@js:${searchScript}`;
+
+// Add root scripts
+for (const name in basicMeta) {
+  if (!RegExtraFile.test(basicMeta[name])) continue;
+
+  const extraFilePath = join(__sourcedir, `${name}.js`);
+  const extraFile = fs.readFileSync(extraFilePath, { encoding: 'utf-8' });
+  const extraFileMinify = UglifyJS.minify(extraFile, UglifyJSOptions);
+
+  if (!extraFileMinify.error) basicMeta[name] = basicMeta[name].replace(RegExtraFile, extraFileMinify.code);
+  else basicMeta[name] = basicMeta[name].replace(RegExtraFile, extraFile);
+}
 
 // Read rule paths
 const ruleNames = (() => {
