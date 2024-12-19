@@ -20,11 +20,27 @@
   const json = JSON.parse(jsonRaw);
   const result = [];
   json.novels.forEach((novel) => {
-
-    novel.tags = novel.tags.join(',');
-    novel.url = `/n/${novel.id}?p=1,{"webView":true}`;
-
-    result.push(novel);
+    // TODO: Make this faster
+    // if (!novel.series) {
+    //   novel.info = {
+    //     name: novel.title,
+    //     author: novel.aName,
+    //     tags: novel.tags.join(','),
+    //     lastChapter: novel.title,
+    //     description: novel.description,
+    //   };
+    // } else {
+    //   novel.info = getSeriesInfo(java, novel.series);
+    // }
+    const newNovel = {
+      name: novel.title,
+      author: novel.aName,
+      tags: novel.tags.join(','),
+      lastChapter: novel.title,
+      description: novel.description,
+      url: `/n/${novel.id}?p=1,{"webView":true}`,
+    };
+    result.push(newNovel);
   });
   return result;
 })(result);
