@@ -15,4 +15,5 @@
   "loginUrl": "https://hlib.cc/login",
   "bookUrlPattern": "^https://hlib\\.cc/n/(\\d+)",
   "searchUrl": "@js:#FROM_FILE#",
+  "jsLib": "#FROM_FILE#",
 }
