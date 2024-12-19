@@ -39,14 +39,14 @@ function getFakeSeries(java, novelId) {
   const novelPath = `/n/${novelId}?p=1`;
   const novelHTML = java.ajax(`https://hlib.cc${novelPath},{"webView":true}`);
   const novelDom = org.jsoup.Jsoup.parse(novelHTML).body();
-  const result = {
-    title: novelDom.setect('div.container h3').text(),
+
+  return [{
+    title: novelDom.select('div.container h3').text(),
     description: novelDom.select('#description').text(),
     isSeriesName: true,
     char: null,
     url: `/n/${novelId}?p=1,{"webView":true}`
-  };
-  return [result];
+  }];
 }
 
 function getSeries(type, id) {
