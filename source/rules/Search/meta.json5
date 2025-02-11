@@ -1,9 +1,9 @@
 {
   "bookList": "@js:#FROM_FILE#",
-  "name": "title",
-  "author": "aName",
+  "name": "name",
+  "author": "author",
   "kind": "tags",
-  "wordCount": "char",
+  "lastChapter": "lastChapter",
   "intro": "description",
   "bookUrl": "url##$##?p=1,{\"webView\":true}",
 }

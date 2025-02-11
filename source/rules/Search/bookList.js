@@ -12,7 +12,7 @@
  *   "view": number,
  *   "ifLike": boolean,
  *   "series": string,
- *   "sTitle": string,
+ *   "sTitle"?: string,
  * }[]
  */
 ((html) => {
@@ -33,11 +33,11 @@
     //   novel.info = getSeriesInfo(java, novel.series);
     // }
     const newNovel = {
-      name: novel.title,
+      name: novel.sTitle ? novel.sTitle : novel.title,
       author: novel.aName,
       tags: novel.tags.join(','),
-      lastChapter: novel.title,
-      description: novel.description,
+      lastChapter: novel.title, // TODO: Get last chapter
+      description: novel.description, // TODO: Get book description
       url: `/n/${novel.id}?p=1,{"webView":true}`,
     };
     result.push(newNovel);
